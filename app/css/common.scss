@@ -1,0 +1,45 @@
+@import 'mixin';
+@import 'menu';
+
+$color1:#aeaeae;
+.wrapper {
+    background-color: $color1 - #548526;
+}
+
+ 
+
+// 继承
+h2 {
+    border: {
+        style: solid;
+        width: 4px;
+        color: #ff9aa9;
+    }
+    line-height: 40px;
+}
+
+.speaker {
+    background: linear-gradient(to right, #ebf113, #0ceff5);
+    @extend h2;
+    border-width: 2px;
+}
+
+h1 {
+  font-size: 32pt;
+  @include text3d(#0982c1);
+}  
+
+$blue:#3bbfce;
+$margin:16px;
+.container{
+	border-color:$blue;
+	color:darken($blue,9%);
+}
+.border{
+	padding:$margin / 2;
+	margin:$margin / 2;
+	border-color:$blue;
+}
+.warning{
+	@include warning(1px);
+}

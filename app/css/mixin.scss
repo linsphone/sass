@@ -1,0 +1,140 @@
+// 圆角
+@mixin border-radius($amount: 5px) {
+    -webkit-border-radius: $amount;
+    -moz-border-radius: $amount;
+    -o-border-radius: $amount;
+    -ms-border-radius: $amount;
+    border-radius: $amount;
+}
+
+// 3d 
+@mixin text3d($color) {
+    color: $color;
+    text-shadow: 1px 1px 0px darken($color, 5%),
+    2px 2px 0px darken($color, 10%),
+    3px 3px 0px darken($color, 15%),
+    4px 4px 0px darken($color, 20%),
+    4px 4px 2p x #000;
+}
+
+// 变红警告
+@mixin warning($borderWidth:1px) {
+    border: $borderWidth solid red;
+}
+
+@mixin clearfix() {
+    zoom: 1;
+    &:after,
+    &:before {
+        display: block;
+        content: "";
+        clear: both;
+    }
+}
+//是否兼容ie6,7著作权归作者所有。
+
+$lte7:false !default;
+
+@mixin inline-block  {
+    display: inline-block;
+    @if $lte7 {
+        *display: inline;
+        *zoom: 1;
+    }
+}
+
+$filter:false !default; //是否开启ie滤镜 
+//背景色半透明 
+@mixin bgcolor-alpha($bgcolor: rgba(0,0,0,.5)){ 
+    color:#fff; 
+    @if $filter{ 
+        filter:progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#{ie-hex-str($bgcolor)}', endColorstr='#{ie-hex-str($bgcolor)}'); 
+    }@else{
+         background-color: #D9D85D; 
+    } 
+    background-color:$bgcolor; 
+}
+
+$a: false !default;
+$b: true !default;
+
+@if not($a){
+    p{
+        color:red;
+    }
+}
+
+div{
+    font: {
+        size: 14px;
+    }
+    @if $a and $b{
+        width: 300px;
+    }
+}
+
+li {
+    line-height: 24px;
+    @if $a and $b{
+        float: left;
+    }
+}
+
+$radius: 5px !default; 
+.box-border{ 
+    border:1px solid #ccc; 
+    padding:10px; 
+    @if $radius != 0{
+         border-radius:$radius; 
+    }
+} 
+$sizeClass: small !default;
+.size{
+    @if $sizeClass == 'small'{ 
+        padding:5px;
+    }@else{
+        padding:10px;
+    } 
+}
+
+@for $i from 1 through 3{
+    .col-#{$i}{
+        width: 2em * $i;
+    }
+}
+
+@each $animal in puma, sea-slug, egret, salamander { .#{$animal}-icon { background-image: url('/images/#{$animal}.png'); } } 
+
+ $btnColorClass: (primary #0078E7 #fff) (blue #00A3CF #fff) (orange #F47837 #fff) !default; 
+ @mixin btn-color($bgColor:#e6e6e6, $textColor:#333){ 
+     color:$textColor;
+     background-color: $bgColor; 
+     border:1px solid darken($bgColor, 5%); 
+     border-color:lighten($bgColor, 2%) darken($bgColor, 5%) darken($bgColor, 5%) lighten($bgColor, 2%); 
+     &:hover{ 
+         background-color: darken($bgColor,5%); color:$textColor; } 
+    } 
+    @each $colorClass in $btnColorClass{ 
+        $class: nth($colorClass,1); $bgColor: nth($colorClass,2); 
+        $textColor: nth($colorClass,3); .btn-#{$class}{ @include btn-color($bgColor,$textColor);
+    } 
+}
+
+
+
+// 去掉一个值的单位，如12px => 12
+//你可能以为($number * 0 + 1) == 1，但是，不是。你漏掉了单位。应该是等于1加上对应的单位。具体来说，
+// (10deg * 0 + 1) == 1deg，而不是(10deg * 0 + 1) == 1。因为$number * 0之后的结果是带单位的。
+@function strip-units($number){
+    @return $number / ($number * 0 + 1);
+}
+$base-font-size:16px !default;
+@function pxToem($target-size,$context:$base-font-size){
+    @if not unitless($target-size){
+        $target-size: strip-units($target-size);
+    }
+    @if not unitless($context){
+        $context: strip-units($context);
+    }
+    @return ($target-size / $context) * 1em;
+}

@@ -1,0 +1,24 @@
+@import 'reset.css';
+@import 'mixin';
+
+
+.demo{
+    a{
+        display: inline-block;
+        width:100px;
+        height: 30px;
+        text-decoration: none;
+        line-height: 30px;
+        text-align: center;
+        background: #aaccff;
+        border-radius: 4px;
+    }
+
+    a[href^='mailto']{
+        font-size: 20px;
+    }
+
+    a[lang~='zh']{
+        background:red;
+    }
+}

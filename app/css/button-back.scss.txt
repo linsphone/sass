@@ -1,0 +1,33 @@
+@import 'mixin';
+
+.button{
+    $w100:100px;
+    width:$w100;
+    height: $w100 / 2;
+    background: rgba(106, 106, 222, 0.5);
+    @include inline-block;
+}
+
+.bkb{
+    width: pxToem(100px);
+    height: pxToem(100px);
+    border: 1px solid #ffccaa;
+}
+
+.qt{
+    border: 1px soid #ffcc33;
+    color: #8a4c5f;
+
+    header{
+        font-size: 20px;
+
+    }
+    
+
+    header ~ p{
+        color: #123456;
+    }
+    header + p.cls{
+        color: #8765ab;
+    }
+}

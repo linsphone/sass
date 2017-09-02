@@ -1,0 +1,80 @@
+@import 'mixin';
+//1.定义变量
+$color: #fff !default; //设置文本颜色 
+$bgColor: #34495e !default; //设置背景色 
+$sfbgColor: #e74c3c !default; //设置悬浮背景色 
+$fontSize: 14px !default; //设置字号 
+$fontFamily: Arial,
+Helvetica !default; //设置字体 
+$width: 462px !default; //设置默认宽度
+// 设置clearfix
+%clearfix {
+    & {
+        *zoom: 1;
+    }
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+        overflow: hidden;
+    }
+}
+
+
+//3.清除列表默认样式
+%listStyle {
+    margin: 0;
+    padding: 0;
+    list-style: none outside none;
+}
+
+$prefix-for-webkit: true !default;
+$prefix-for-mozilla: true !default;
+$prefix-for-microsoft: true !default;
+$prefix-for-opera: true !default;
+$prefix-for-spec: true !default;
+//浏览器前缀
+@mixin prefixer ($property, $value, $prefixes) {
+    @each $prefix in $prefixes {
+        @if $prefix==webkit and $prefix-for-webkit==true {
+            -webkit-#{$property}: $value;
+        }
+        @else if $prefix==moz and $prefix-for-mozilla==true {
+            -moz-#{$property}: $value;
+        }
+        @else if $prefix==ms and $prefix-for-microsoft==true {
+            -ms-#{$property}: $value;
+        }
+        @else if $prefix==o and $prefix-for-opera==true {
+            -o-#{$property}: $value;
+        }
+        @else if $prefix==spec and $prefix-for-spec==true {
+            #{$property}: $value;
+        }
+        @else {
+            @warn "Unrecognized prefix: #{$prefix}";
+        }
+    }
+}
+
+
+//5.定义transform 
+//示例: 
+@include prefixer(border-radius, $radius, webkit spec);
+//Transform, transform-origin, transform-style //---------------------------------------- 
+@mixin transform($property...) {
+    @include prefixer(transform, $property, webkit moz o ms spec);
+}
+
+@mixin transform-origin($axes: 50%) {
+    // x-axis - left | center | right | length | % // y-axis - top | center | bottom | length | % // z-axis - length
+    @include prefixer(transform-origin, $axes, webkit moz o ms spec);
+}
+
+@mixin skewX($degrees) {
+    @include prefixer(transform, skewX($degrees), webkit moz o ms spec);
+    -webkit-backface-visibility: hidden;
+}

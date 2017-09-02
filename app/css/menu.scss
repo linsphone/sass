@@ -1,0 +1,24 @@
+@import 'mixin';
+
+nav {
+    display: block;
+    @include clearfix();
+    li {
+        cursor: pointer;
+        list-style: none;
+        padding: 10px 20px;
+        float: left;
+        background: #34495e;
+        border-right: 1px solid white;
+        &:last-child {
+            border-right: none;
+        }
+        a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: normal;
+            display: block;
+        }
+        transform: skewx(-30deg);
+    }
+}
